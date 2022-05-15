@@ -1,6 +1,7 @@
-const common = {
+module.exports = {
     output: {
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.js',
+        assetModuleFilename: '[name][ext]'
     },
     mode: 'development',
     devtool: 'inline-source-map',
@@ -8,18 +9,13 @@ const common = {
         rules: [{
             test: /.ts$/,
             loader: 'ts-loader'
+        }, {
+            test: /.html$/,
+            type: 'asset/resource'
         }]
     },
     resolve: {
         extensions: ['.ts', 'js']
-    }
-}
-
-module.exports = [{
-    ...common,
-    entry: {
-        server: './src/server.ts'
     },
-    target: 'node',
-    externals: nodeModules
-}]
+    entry: './src/web/index.ts'
+}

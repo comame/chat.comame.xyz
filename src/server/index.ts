@@ -1,5 +1,6 @@
 import express from 'express'
 import crypto from 'crypto'
+import path from 'path'
 import { createRoom, getChat, getPubkey, getRoom, postChat, setPubkey } from './room'
 import { createRoomResponse, errorResponse, getChatRequest, getChatResponse, getPubkeyRequest, getPubkeyResponse, getRoomRequest, getRoomResponse, isGetChatRequest, isGetPubkeyRequest, isGetRoomRequest, isPostChatRequest, isSetPubkeyRequest, postChatRequest, postChatResponse, setPubkeyRequest, setPubkeyResponse } from '../types'
 
@@ -7,9 +8,10 @@ globalThis.crypto = crypto as any
 
 const app = express()
 app.use(express.json())
+app.use(express.static(path.resolve(__dirname, '..')))
 
 function sendInvalidRequestBodyError(res: express.Response) {
-    res.status(400).json({ kind: 'errorResponse', error: 'invalid_request_body_type '})
+    res.status(400).json({ kind: 'errorResponse', error: 'invalid_request_body_type'})
 }
 
 app.post<{}, createRoomResponse>('/api/room/create', async (_req, res) => {

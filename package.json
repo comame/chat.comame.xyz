@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build:server": "tsc",
+    "build": "tsc && webpack --mode=production",
+    "build:dev:server": "tsc",
+    "build:dev:web": "webpack",
     "start": "node dist/server"
   },
   "dependencies": {
