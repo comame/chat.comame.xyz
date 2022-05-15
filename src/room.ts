@@ -36,8 +36,9 @@ export async function postChat(roomId: string, payload: string, party: 'A'|'B') 
 
 export async function getChat(roomId: string, party: 'A'|'B', since: number) {
     const chatKeys = (await keys(`chat:${roomId}:*`)).filter(key => {
+        const keyParty = key.split(':')[2]
         const timestamp = Number.parseInt(key.split(':')[3])
-        return timestamp > since
+        return (timestamp > since) && (keyParty === party)
     })
     return Promise.all(chatKeys.map(async (chatKey) => {
         const payload = await get(chatKey)
