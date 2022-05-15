@@ -1,7 +1,7 @@
 import express from 'express'
 import crypto from 'crypto'
 import { createRoom, getChat, getPubkey, getRoom, postChat, setPubkey } from './room'
-import { createRoomResponse, errorResponse, getChatRequest, getChatResponse, getPubkeyRequest, getPubkeyResponse, getRoomRequest, getRoomResponse, isGetChatRequest, isGetPubkeyRequest, isGetRoomRequest, isPostChatRequest, isSetPubkeyRequest, postChatRequest, postChatResponse, setPubkeyRequest, setPubkeyResponse } from './types'
+import { createRoomResponse, errorResponse, getChatRequest, getChatResponse, getPubkeyRequest, getPubkeyResponse, getRoomRequest, getRoomResponse, isGetChatRequest, isGetPubkeyRequest, isGetRoomRequest, isPostChatRequest, isSetPubkeyRequest, postChatRequest, postChatResponse, setPubkeyRequest, setPubkeyResponse } from '../types'
 
 globalThis.crypto = crypto as any
 

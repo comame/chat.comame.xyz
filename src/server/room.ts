@@ -1,5 +1,5 @@
-import { uint8ArrayToHex } from "./lib/conv"
-import { get, keys, set } from "./lib/redis"
+import { uint8ArrayToHex } from "../lib/conv"
+import { get, keys, set } from "../lib/redis"
 
 const roomTtl = 600
 const chatTtl = 120
