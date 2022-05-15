@@ -16,15 +16,30 @@ async function conn() {
     }
 }
 
-export async function set(key: string, value: string, ttlSec?: number) {
+export async function set(key: string, value: string, opt?: {
+    expireSec?: number,
+    unique?: boolean
+}): Promise<boolean> {
     await conn()
-    if (typeof ttlSec === 'undefined') {
-        return client.set(`${prefix}:${key}`, value)
+
+    if (opt) {
+        const _opt: any = {}
+        if (opt.expireSec) {
+            _opt.EX = opt.expireSec
+        }
+        if (opt.unique) {
+            _opt.NX = true
+        }
+        const result = await client.set(`${prefix}:${key}`, value, _opt)
+        return result === 'OK'
     } else {
-        return client.set(`${prefix}:${key}`, value, {
-            EX: ttlSec
-        })
+        const result = await client.set(`${prefix}:${key}`, value)
+        return result === 'OK'
     }
+}
+
+export async function get(key: string) {
+    return client.get(`${prefix}:${key}`)
 }
 
 export async function del(key: string) {
