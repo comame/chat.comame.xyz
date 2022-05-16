@@ -1,5 +1,5 @@
 import { uint8ArrayToHex } from "../lib/conv"
-import { get, keys, set } from "../lib/redis"
+import { del, get, keys, set } from "../lib/redis"
 
 const roomTtl = 600
 const chatTtl = 60
@@ -46,6 +46,8 @@ export async function getChat(roomId: string, party: 'A'|'B') {
         const iv = await get(`iv:${key}`)
         const party = chatKey.split(':')[3]
         const timestampStr = chatKey.split(':')[4]
+        await del(`chat:${key}`)
+        await del(`iv:${key}`)
         return {
             party: party as 'A'|'B',
             payload: payload as string,
