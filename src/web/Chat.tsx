@@ -45,7 +45,7 @@ export const Chat: React.FC<{
     useEffect(() => {
         const interval = setInterval(() => {
             fetchChat()
-        }, 5000)
+        }, 1000)
         return () => {
             clearInterval(interval)
         }

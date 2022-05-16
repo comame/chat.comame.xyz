@@ -89,7 +89,7 @@ const EstablishRoomForA: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
 
 
     return <div>
-        <p>inviteId: {inviteId}</p>
+        <p>招待コード: {inviteId}</p>
     </div>
 }
 
@@ -101,14 +101,13 @@ const EstablishRoomForB: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
 
     const getRoomId = async () => {
         if (inviteId === null) {
-            // TODO: よくない
             throw 'ui:inviteid-not-set'
         }
 
         const res = await fetchApi('/api/room/get', {
             kind: 'getRoomRequest',
             item: {
-                inviteId
+                inviteId: inviteId.replace(/\s/g, '').toLowerCase()
             }
         })
 
@@ -117,8 +116,7 @@ const EstablishRoomForB: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
         }
 
         if (!res.item.ok) {
-            // TODO: よくない
-            throw 'ui:room-not-found'
+            return
         }
 
         setRoomId(res.item.roomId)
@@ -142,7 +140,6 @@ const EstablishRoomForB: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
         }
 
         if (!res.item.ok) {
-            // TODO: よくない
             throw 'ui:pubkey-not-found'
         }
 
@@ -190,7 +187,7 @@ const EstablishRoomForB: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
     }, [roomId])
 
     return <div>
-        <input placeholder='invite-id' onInput={(e) => { setInviteIdInputValue((e.target as any).value) }}></input>
+        <input placeholder='招待コード' onInput={(e) => { setInviteIdInputValue((e.target as any).value) }}></input>
         <button onClick={() => setInviteId(inviteIdInputValue)}>部屋を検索</button>
     </div>
 }

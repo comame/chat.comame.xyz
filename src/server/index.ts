@@ -115,3 +115,7 @@ app.post<{}, getPubkeyResponse, getPubkeyRequest>('/api/pubkey/get', async (req,
 app.listen(8080, () => {
     console.log('server started: ' + 'http://localhost:8080')
 })
+
+process.on('SIGTERM', () => {
+    process.exit()
+})

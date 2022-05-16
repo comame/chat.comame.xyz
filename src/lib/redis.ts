@@ -39,6 +39,7 @@ export async function set(key: string, value: string, opt?: {
 }
 
 export async function get(key: string) {
+    await conn()
     return client.get(`${prefix}:${key}`)
 }
 
