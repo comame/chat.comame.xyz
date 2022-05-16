@@ -4,6 +4,14 @@ import { fetchApi } from "./fetchApi"
 import { reactState } from "./reactState"
 import { useOnceEffect } from "./useOnceEffect"
 
+const readableInviteId = (inviteId: string) => {
+    return (inviteId.slice(0, 4) + '-' + inviteId.slice(4)).toUpperCase()
+}
+
+const revertReadableInviteId = (readableInviteId: string) => {
+    return readableInviteId.replace(/-/g, '').toLowerCase()
+}
+
 const EstablishRoomForA: typeof EstablishRoom = ({ keypair, roomIdState, otherPubkeyState }) => {
     const [roomId, setRoomId] = roomIdState
     const [otherPubkey, setOtherPubkey] = otherPubkeyState
@@ -87,9 +95,8 @@ const EstablishRoomForA: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
         }
     }, [roomId])
 
-
     return <div>
-        <p>招待コード: {inviteId}</p>
+        <p>招待コード: <code>{inviteId && readableInviteId(inviteId)}</code></p>
     </div>
 }
 
@@ -107,7 +114,7 @@ const EstablishRoomForB: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
         const res = await fetchApi('/api/room/get', {
             kind: 'getRoomRequest',
             item: {
-                inviteId: inviteId.replace(/\s/g, '').toLowerCase()
+                inviteId: revertReadableInviteId(inviteId)
             }
         })
 

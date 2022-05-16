@@ -17,8 +17,9 @@ export const ValidateOtherPubkey: React.FC<{
     return <div>
         <p>自分のフィンガープリント: {myFingerprint}</p>
         <p>相手のフィンガープリント: {otherFingerprint}</p>
+        <p>相手のフィンガープリントが正しいことを確認してください。異なる場合は、もう一度やり直してください。</p>
         <button onClick={() => {
             setValidated(true)
-        }}>相手のフィンガープリントは正しい</button>
+        }}>続行</button>
     </div>
 }
