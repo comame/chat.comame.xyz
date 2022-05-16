@@ -18,8 +18,7 @@ export const Chat: React.FC<{
             kind: 'getChatRequest',
             item: {
                 roomId,
-                party: myParty === 'A' ? 'B' : 'A',
-                since: beforeFecthRef.current
+                party: myParty === 'A' ? 'B' : 'A'
             }
         })
 

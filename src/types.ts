@@ -51,8 +51,7 @@ export type getChatRequest = {
     kind: 'getChatRequest',
     item: {
         roomId: string,
-        party: 'A'|'B',
-        since: number
+        party: 'A'|'B'
     }
 }
 

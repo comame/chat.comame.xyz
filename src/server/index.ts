@@ -58,7 +58,7 @@ app.post<{}, getChatResponse, getChatRequest>('/api/chat/get', async (req, res) 
     }
 
     const body = req.body.item
-    const chats = await getChat(body.roomId.toLowerCase(), body.party, body.since)
+    const chats = await getChat(body.roomId.toLowerCase(), body.party)
     res.json({
         kind: 'getChatResponse',
         item: {
