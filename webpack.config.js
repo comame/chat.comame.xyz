@@ -7,7 +7,7 @@ module.exports = {
     devtool: 'inline-source-map',
     module: {
         rules: [{
-            test: /.ts$/,
+            test: /.tsx?$/,
             loader: 'ts-loader'
         }, {
             test: /.html$/,
@@ -15,7 +15,7 @@ module.exports = {
         }]
     },
     resolve: {
-        extensions: ['.ts', 'js']
+        extensions: ['.ts', '.tsx', 'js']
     },
-    entry: './src/web/index.ts'
+    entry: './src/web/index.tsx'
 }

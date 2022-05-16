@@ -28,7 +28,7 @@ app.post<{}, getRoomResponse|errorResponse, getRoomRequest>('/api/room/get', asy
         return
     }
 
-    const room = await getRoom(req.body.item.inviteId)
+    const room = await getRoom(req.body.item.inviteId.toLowerCase())
     res.json({
         kind: 'getRoomResponse',
         item: room
@@ -42,7 +42,7 @@ app.post<{}, postChatResponse|errorResponse, postChatRequest>('/api/chat/post', 
     }
 
     const body = req.body.item
-    const success = await postChat(body.roomId, body.payload, body.party)
+    const success = await postChat(body.roomId.toLowerCase(), body.payload, body.party)
     res.json({
         kind: 'postChatResponse',
         item: {
@@ -58,7 +58,7 @@ app.post<{}, getChatResponse, getChatRequest>('/api/chat/get', async (req, res) 
     }
 
     const body = req.body.item
-    const chats = await getChat(body.roomId, body.party, body.since)
+    const chats = await getChat(body.roomId.toLowerCase(), body.party, body.since)
     res.json({
         kind: 'getChatResponse',
         item: {
@@ -75,7 +75,7 @@ app.post<{}, setPubkeyResponse, setPubkeyRequest>('/api/pubkey/set', async (req,
     }
 
     const body = req.body.item
-    const success = await setPubkey(body.roomId, body.party, body.pubkey)
+    const success = await setPubkey(body.roomId.toLowerCase(), body.party, body.pubkey)
     res.json({
         kind: 'setPubkeyResponse',
         item: {
@@ -91,7 +91,7 @@ app.post<{}, getPubkeyResponse, getPubkeyRequest>('/api/pubkey/get', async (req,
     }
 
     const body = req.body.item
-    const pubkey = await getPubkey(body.roomId, body.myParty)
+    const pubkey = await getPubkey(body.roomId.toLowerCase(), body.myParty)
 
     if (pubkey === null) {
         res.json({
@@ -113,5 +113,5 @@ app.post<{}, getPubkeyResponse, getPubkeyRequest>('/api/pubkey/get', async (req,
 })
 
 app.listen(8080, () => {
-    console.log('server started.')
+    console.log('server started: ' + 'http://localhost:8080')
 })

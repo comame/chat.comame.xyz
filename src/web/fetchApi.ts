@@ -1,6 +1,4 @@
-import { generateEcdhKeypair } from '../lib/encrypt'
-import { createRoomResponse, errorResponse, getChatRequest, getChatResponse, getPubkeyRequest, getPubkeyResponse, getRoomRequest, getRoomResponse, postChatRequest, postChatResponse, setPubkeyRequest, setPubkeyResponse } from '../types'
-import './index.html'
+import { createRoomResponse, getRoomRequest, getRoomResponse, postChatRequest, postChatResponse, getChatRequest, getChatResponse, setPubkeyRequest, setPubkeyResponse, getPubkeyRequest, getPubkeyResponse, errorResponse } from '../types'
 
 type apiTypes = {
     '/api/room/create': {
@@ -29,7 +27,7 @@ type apiTypes = {
     }
 }
 
-async function fetchApi<E extends keyof apiTypes>(
+export async function fetchApi<E extends keyof apiTypes>(
     endpoint: E,
     body: apiTypes[E]['request']
 ): Promise<apiTypes[E]['response']|errorResponse> {
@@ -41,15 +39,3 @@ async function fetchApi<E extends keyof apiTypes>(
         body: JSON.stringify(body)
     }).then(res => res.json())
 }
-
-window.addEventListener('load', async () => {
-    const myKeypair = await generateEcdhKeypair()
-    const createRoomResponse = await fetchApi('/api/room/create', {})
-
-    if (createRoomResponse.kind === 'errorResponse') {
-        console.error(createRoomResponse)
-        return
-    }
-
-    console.log(myKeypair, createRoomResponse)
-})

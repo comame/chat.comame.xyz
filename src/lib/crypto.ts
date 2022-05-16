@@ -26,3 +26,9 @@ export async function decrypt(ecdhKeypair: CryptoKeyPair, senderPubkey: string, 
     const decrypted = await crypto.subtle.decrypt({ name: aesParam.name, iv: hexToUint8array(iv) }, sharedKey, hexToUint8array(cipher))
     return new Uint8Array(decrypted)
 }
+
+export async function generatePubkeyFingerprint(pubkey: string) {
+    const digest = await crypto.subtle.digest('SHA-1', hexToUint8array(pubkey))
+    const fingerprint = uint8ArrayToHex(new Uint8Array(digest))
+    return fingerprint
+}
