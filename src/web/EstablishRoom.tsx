@@ -79,7 +79,7 @@ const EstablishRoomForA: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
     useEffect(() => {
         const interval = setInterval(() => {
         if (roomId !== null && otherPubkey === null) {
-                getOtherPubkey()
+            getOtherPubkey()
         }
         }, 1000)
         return () => {
@@ -95,7 +95,7 @@ const EstablishRoomForA: typeof EstablishRoom = ({ keypair, roomIdState, otherPu
 
 const EstablishRoomForB: typeof EstablishRoom = ({ keypair, roomIdState, otherPubkeyState }) => {
     const [roomId, setRoomId] = roomIdState
-    const [otherPubkey, setOtherPubkey] = otherPubkeyState
+    const [_otherPubkey, setOtherPubkey] = otherPubkeyState
     const [inviteId, setInviteId] = useState<string|null>(null)
     const [inviteIdInputValue, setInviteIdInputValue] = useState<string>('')
 

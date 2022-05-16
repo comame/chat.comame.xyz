@@ -33,7 +33,8 @@ export type postChatRequest = {
     item: {
         roomId: string,
         party: 'A'|'B',
-        payload: string
+        payload: string,
+        iv: string
     }
 }
 
@@ -64,7 +65,8 @@ export type getChatResponse = {
         chats: {
             timestamp: number,
             party: 'A'|'B',
-            payload: string
+            payload: string,
+            iv: string
         }[]
     }
 }

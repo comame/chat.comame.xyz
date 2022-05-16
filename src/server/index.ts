@@ -42,7 +42,7 @@ app.post<{}, postChatResponse|errorResponse, postChatRequest>('/api/chat/post', 
     }
 
     const body = req.body.item
-    const success = await postChat(body.roomId.toLowerCase(), body.payload, body.party)
+    const success = await postChat(body.roomId.toLowerCase(), body.payload, body.party, body.iv)
     res.json({
         kind: 'postChatResponse',
         item: {

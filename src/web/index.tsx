@@ -4,8 +4,8 @@ import './index.html'
 import { generateEcdhKeypair } from '../lib/crypto'
 import { EstablishRoom } from './EstablishRoom'
 import { useOnceEffect } from './useOnceEffect'
-import { useMyPubkey } from './useMyPubkey'
-import { usePubkeyFingerprint } from './usePubkeyFingerprint'
+import { ValidateOtherPubkey } from './ValidateOtherPubkey'
+import { Chat } from './Chat'
 
 const ChooseParty: React.FC<{
     setParty: (arg0: 'A'|'B') => unknown
@@ -19,22 +19,22 @@ function Main() {
     const [party, setParty] = useState<'A'|'B'|null>(null)
     const [roomId, setRoomId] = useState<string|null>(null)
     const [otherPubkey, setOtherPubkey] = useState<string|null>(null)
-
-    const myPubkey = useMyPubkey(keypair)
+    const [otherPubkeyValidated, setOtherPubkeyValidated] = useState(false)
 
     useOnceEffect(() => {
         generateEcdhKeypair().then(keypair => {
-            console.log('keypair generated')
+            console.log('Generated ECDH Keypair.')
             setKeypair(keypair)
         })
     })
 
     return <div>
         <p>Room: {roomId}</p>
-        <p>My Fingerprint: {usePubkeyFingerprint(myPubkey)}</p>
-        <p>Other Fingerprint: {usePubkeyFingerprint(otherPubkey)}</p>
+        <p>Established: {otherPubkeyValidated.toString()}</p>
         { party === null && <ChooseParty setParty={setParty} /> }
-        { party !== null && keypair !== null && <EstablishRoom keypair={keypair} party={party} roomIdState={[roomId, setRoomId]} otherPubkeyState={[otherPubkey, setOtherPubkey]} /> }
+        { party !== null && keypair !== null && !otherPubkeyValidated && <EstablishRoom keypair={keypair} party={party} roomIdState={[roomId, setRoomId]} otherPubkeyState={[otherPubkey, setOtherPubkey]} /> }
+        { keypair !== null && otherPubkey !== null && !otherPubkeyValidated && <ValidateOtherPubkey keypair={keypair} otherPubkey={otherPubkey} validatedState={[otherPubkeyValidated, setOtherPubkeyValidated]} /> }
+        { keypair !== null && otherPubkey !== null && roomId !== null && party !== null && otherPubkeyValidated && <Chat keypair={keypair} otherPubkey={otherPubkey} roomId={roomId} myParty={party} /> }
     </div>
 }
 
