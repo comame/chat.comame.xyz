@@ -74,26 +74,28 @@ export const Chat: React.FC<{
     const send = async () => {
         setIsSending(true)
 
-        const { iv, cipher } = await encrypt(keypair, otherPubkey, payload)
-        const res = await fetchApi('/api/chat/post', {
-            kind: 'postChatRequest',
-            item: {
-                roomId,
-                party: myParty,
-                payload: cipher,
-                iv
+        try {
+            const { iv, cipher } = await encrypt(keypair, otherPubkey, payload)
+            const res = await fetchApi('/api/chat/post', {
+                kind: 'postChatRequest',
+                item: {
+                    roomId,
+                    party: myParty,
+                    payload: cipher,
+                    iv
+                }
+            })
+
+            if (res.kind === 'errorResponse') {
+                throw 'io:unknown-api-error'
             }
-        })
 
-        if (res.kind === 'errorResponse') {
-            throw 'io:unknown-api-error'
+            if (!res.item.ok) {
+                throw 'io:fail-post-chat'
+            }
+        } finally {
+            setIsSending(false)
         }
-
-        if (!res.item.ok) {
-            throw 'io:fail-post-chat'
-        }
-
-        setIsSending(false)
     }
 
     return <div>
