@@ -112,11 +112,9 @@ export const Chat: React.FC<{
                     const file = new Blob([textUint8array.buffer])
                     const objUrl = URL.createObjectURL(file)
                     el.setAttribute('href', objUrl)
-                    // @ts-expect-error
-                    el.click()
-                    el.remove()
                     setTimeout(() => {
                         URL.revokeObjectURL(objUrl)
+                        el.setAttribute('href', '#')
                     }, 10 * 1000)
                 }
 
