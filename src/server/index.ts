@@ -7,7 +7,7 @@ import { createRoomResponse, errorResponse, getChatRequest, getChatResponse, get
 globalThis.crypto = crypto as any
 
 const app = express()
-app.use(express.json())
+app.use(express.json({ limit: '10mb'}))
 app.use(express.static(path.resolve(__dirname, '..')))
 
 function sendInvalidRequestBodyError(res: express.Response) {
